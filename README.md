@@ -117,6 +117,34 @@ below, the following syntax must be used.
 ```
 
 
+## Specifying a Insert for Nested Fields
+
+By default, `link_to_add` appends fields immediately before the link when clicked.
+This is not desirable when using a list or table, for example.  In these situations,
+the "data-insert" attribute can be used to specify how new fields should be inserted
+("after" or "before"). If "data-target" is added, so  default  value will be ''after",
+but if there is not added, so default value will be "before"
+
+```erb
+<table id="tasks">
+  <%= f.fields_for :tasks, :wrapper => false do |task_form| %>
+    <tr class="fields">
+      <td><%= task_form.text_field :name %></td>
+      <td><%= task_form.link_to_remove "Remove this task" %></td>
+    </tr>
+  <% end %>
+</table>
+<p><%= f.link_to_add "Add a task", :tasks, :data => { :insert => "before" } %></p>
+```
+
+Note that the `:data` option above only works in Rails 3.1+.  For Rails 3.0 and
+below, the following syntax must be used.
+
+```erb
+<p><%= f.link_to_add "Add a task", :tasks, "data-target" => "#tasks" %></p>
+```
+
+
 ## JavaScript events
 
 Sometimes you want to do some additional work after element was added or removed, but only

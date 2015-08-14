@@ -60,11 +60,23 @@
     },
     insertFields: function(content, assoc, link) {
       var target = $(link).data('target');
-      if (target) {
-        return $(content).appendTo($(target));
-      } else {
-        return $(content).insertBefore(link);
-      }
+        var insert = $(link).data('insert');
+
+        if (target) {
+            if(insert){
+                return ( insert == 'before' ) ? $(content).prependTo($(target)) : $(content).appendTo( $(target) );
+            }else{
+                return $(content).appendTo( $(target) );
+            }
+        } else {
+            if(insert){
+                return ( insert == 'after' ) ? $(content).insertAfter(link) : $(content).insertBefore(link);
+            }else{
+                return $(content).insertBefore(link);
+            }
+
+        }
+
     },
     removeFields: function(e) {
       var $link = $(e.currentTarget),
